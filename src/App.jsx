@@ -1,20 +1,33 @@
-import React, { useEffect } from "react";
-import { useStateProvider } from "./utils/StateProvider";
-import Login from "./components/Login/Login";
-import { reducerCases } from "./utils/Constants";
-import Spotify from "./components/Spotify/Spotify";
+import React, { Fragment, useState } from "react";
+import "./App.css";
+import CartProvider from "./store/CartProvider";
+import Header from "./components/Layout/Header";
+import Cart from "./components/Cart/Cart";
+import Meals from "./components/Meals/Meals";
 
-export default function App() {
-  const [{ token }, dispatch] = useStateProvider();
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const token = hash.substring(1).split("&")[0].split("=")[1];
-      if (token) {
-        dispatch({ type: reducerCases.SET_TOKEN, token });
-      }
-    }
-    document.title = "Spotify";
-  }, [dispatch, token]);
-  return <div>{token ? <Spotify /> : <Login />}</div>;
-}
+const App = () => {
+  const [cartIsShown, setCartIsShown] = useState(false);
+
+  const showCartHandler = () => {
+    setCartIsShown(true);
+  };
+
+  const hideCartHandler = () => {
+    setCartIsShown(false);
+  };
+  return (
+    <Fragment>
+      <CartProvider>
+        {cartIsShown && <Cart onClose={hideCartHandler} />}
+        <Header onShowCart={showCartHandler} />
+        <main>
+          <Meals />
+        </main>
+      </CartProvider>
+      <footer>
+        <p> copyright©2023 Santoshpeddinti</p>
+      </footer>
+    </Fragment>
+  );
+};
+export default App;

@@ -1,0 +1,17 @@
+footer {
+  background-color: rgb(60, 58, 58);
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer p {
+  color: orangered;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+@media (min-width: 350px) and (max-width: 480px) {
+  footer {
+    height: 2rem;
+  }
+}
